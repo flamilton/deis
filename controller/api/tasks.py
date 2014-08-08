@@ -80,7 +80,7 @@ def stop_containers(containers):
 def run_command(c, command):
     release = c.release
     version = release.version
-    image = release.image
+    image = release.image + ':v' + version
     # check for backwards compatibility
     if not _has_hostname(image):
         image = '{}:{}/{}'.format(settings.REGISTRY_HOST,
