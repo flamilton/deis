@@ -102,4 +102,5 @@ def run_command(c, command):
 
 def _has_hostname(image):
     repo, tag = utils.parse_repository_tag(image)
-    return True if '.' in repo else False
+    return True if '.' in repo.split('/')[0] and \
+                   '/' in repo else False
