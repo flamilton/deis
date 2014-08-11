@@ -37,7 +37,7 @@ done
 
 # spawn the service in the background
 cd /var/lib/redis
-sudo -u redis /usr/bin/redis-server /etc/redis/redis.conf &
+setuser redis /usr/bin/redis-server /etc/redis/redis.conf &
 SERVICE_PID=$!
 
 # smart shutdown on SIGINT and SIGTERM
