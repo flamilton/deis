@@ -48,8 +48,11 @@ until confd -onetime -node $ETCD -config-file /app/confd.toml; do
 	sleep $(($ETCD_TTL/2))  # sleep for half the TTL
 done
 
+# Fix permissions that change after upgrading from deis/base to deis/init
+chown -R postgres:postgres /var/lib/postgresql/9.3/main
+
 # run the service in the background
-sudo -i -u postgres /usr/lib/postgresql/9.3/bin/postgres \
+setuser postgres /usr/lib/postgresql/9.3/bin/postgres \
                     -c config-file=${PG_CONFIG:-/etc/postgresql/9.3/main/postgresql.conf} \
                     -c listen-addresses=${PG_LISTEN:-*} &
 

@@ -1,4 +1,4 @@
-FROM deis/base:latest
+FROM deis/init:latest
 MAINTAINER OpDemand <info@opdemand.com>
 
 # install 9.3 from postgresql.org repository
@@ -8,9 +8,10 @@ RUN apt-get update && apt-get install -yq postgresql-9.3 && /etc/init.d/postgres
 
 # add the current build context to /app
 ADD . /app
+ADD bin/boot /etc/service/deis-database/run
 
 # define the execution environment
 VOLUME ["/var/lib/postgresql"]
 WORKDIR /app
-CMD ["/app/bin/boot"]
+CMD ["/sbin/my_init"]
 EXPOSE 5432
